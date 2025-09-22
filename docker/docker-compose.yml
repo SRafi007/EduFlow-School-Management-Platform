@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: eduflow_db
+    restart: always
+    environment:
+      POSTGRES_USER: eduflow
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: eduflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eduflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: eduflow_api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://eduflow:dev_password@db:5432/eduflow
+    volumes:
+      - ./src:/app/src
+      - ./logs:/app/logs
+    depends_on:
+      db:
+        condition: service_healthy
+
+  scraper:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.scraper
+    container_name: eduflow_scraper
+    restart: "no"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://eduflow:dev_password@db:5432/eduflow
+    volumes:
+      - ./samples:/app/samples
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
