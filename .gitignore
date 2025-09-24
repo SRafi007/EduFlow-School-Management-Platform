@@ -2,4 +2,5 @@ Assignment_doc.pdf
 .env
 Suggestions.md
 eduflowvenv/
-presentation_prep.md
+notes/
+__pycache__/
