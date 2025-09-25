@@ -1,9 +1,3 @@
-Perfect ✅ — the **DESIGN.md** is your chance to **show evaluators you understand the “why” behind your code**.
-I’ll write it in a clean and professional way that directly connects your **OOP implementation** and **project architecture** to the assignment requirements.
-
----
-
-# 📄 DESIGN.md
 
 **EduFlow SMS – Design & Architecture**
 
@@ -176,9 +170,3 @@ Domain → Application → Infrastructure → Interfaces
 * **Production Practices** → logging, Docker, migrations, and testing included.
 
 ---
-
-✅ With this architecture, EduFlow SMS is **both assignment-ready and production-minded**, demonstrating solid software engineering practices.
-
----
-
-Would you like me to also prepare an **API.md** file (documenting all endpoints with example requests/responses) so you have a polished submission package?

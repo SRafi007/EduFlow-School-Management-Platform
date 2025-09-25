@@ -5,6 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
+ENV PYTHONPATH=/app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,11 +17,9 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy scraper code only (lighter image than full API)
-COPY src/infrastructure/scraper/ ./src/infrastructure/scraper/
-COPY src/config/ ./src/config/
-COPY src/utils/ ./src/utils/
+# Copy source + samples
+COPY src/ ./src/
 COPY samples/ ./samples/
 
-# Default command (can be overridden in docker-compose)
-CMD ["python", "src/infrastructure/scraper/scrape.py", "--pages", "3", "--db"]
+# Run scraper as module
+CMD ["python", "-m", "src.infrastructure.scraper.scrape", "--pages", "3", "--db"]
