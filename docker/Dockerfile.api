@@ -14,13 +14,17 @@ RUN apt-get update && apt-get install -y \
 # Set work directory
 WORKDIR /app
 
+# Set Python path
+ENV PYTHONPATH=/app
+
 # Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY src/ ./src/
-#COPY alembic.ini ./  # if using Alembic
+COPY alembic.ini ./
+COPY alembic/ ./alembic/
 
 # Expose port
 EXPOSE 8000

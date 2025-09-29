@@ -29,7 +29,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql+asyncpg://eduflow:dev_password@db:5432/eduflow
+      - DATABASE_URL=postgresql://eduflow:dev_password@db:5432/eduflow
     volumes:
       - ./src:/app/src
       - ./logs:/app/logs

@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Database
-    database_url: str = "postgresql+asyncpg://user:password@localhost:5432/eduflow"
+    database_url: str = "postgresql+asyncpg://eduflow_user:dev_password@localhost:5432/eduflow"
 
     # API
     api_host: str = "0.0.0.0"
