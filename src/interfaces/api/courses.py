@@ -1,19 +1,20 @@
 # src/interfaces/api/courses.py
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.infrastructure.db.session import get_session
 from src.application.services.course_service import CourseService
+from src.interfaces.schemas.course_schema import CourseCreate, CourseOut
 
 router = APIRouter()
 
-@router.post("/")
-async def create_course(name: str, description: str = None, capacity: int = 30, session: AsyncSession = Depends(get_session)):
-    course = await CourseService.create_course(session, name, description, capacity)
-    return {"id": str(course.id), "name": course.name, "capacity": course.capacity}
+@router.post("/", response_model=CourseOut)
+async def create_course(payload: CourseCreate, session: AsyncSession = Depends(get_session)):
+    course = await CourseService.create_course(session, payload.name, payload.description, payload.capacity)
+    return course
 
-@router.get("/{course_id}")
+@router.get("/{course_id}", response_model=CourseOut)
 async def get_course(course_id: str, session: AsyncSession = Depends(get_session)):
     course = await CourseService.get_course(session, course_id)
     if not course:
-        return {"error": "Course not found"}
-    return {"id": str(course.id), "name": course.name, "capacity": course.capacity}
+        raise HTTPException(status_code=404, detail="Course not found")
+    return course

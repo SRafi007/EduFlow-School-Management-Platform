@@ -11,6 +11,8 @@ certifi==2025.8.3
 charset-normalizer==3.4.3
 click==8.3.0
 colorama==0.4.6
+dnspython==2.8.0
+email-validator==2.3.0
 fastapi==0.117.1
 frozenlist==1.7.0
 greenlet==3.2.4
@@ -32,6 +34,7 @@ pydantic-settings==2.11.0
 pydantic_core==2.33.2
 Pygments==2.19.2
 pytest==8.4.2
+pytest-asyncio==1.2.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 python-multipart==0.0.20
